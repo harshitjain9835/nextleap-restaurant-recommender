@@ -107,7 +107,7 @@ sequenceDiagram
 
 | Component | Description |
 |-----------|-------------|
-| **Preference form** | Inputs for location, budget tier, cuisine, minimum rating, free-text extras |
+| **Preference form** | Inputs for city, optional area/locality, budget tier, cuisine, minimum rating, free-text extras |
 | **Results view** | Cards/table: name, cuisine, rating, cost, AI explanation |
 | **Summary block** (optional) | LLM-generated overview of the shortlist |
 | **Feedback states** | Loading, no matches, LLM failure with fallback messaging |
@@ -117,7 +117,7 @@ sequenceDiagram
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Find restaurants                                        │
-│  [Location ▼] [Budget ▼] [Cuisine ▼] [Min rating ▼]     │
+│  [City ▼] [Area (optional) ▼] [Budget ▼] [Cuisine ▼]      │
 │  [Additional preferences: _______________________]     │
 │                              [ Get recommendations ]     │
 ├─────────────────────────────────────────────────────────┤
@@ -133,7 +133,8 @@ sequenceDiagram
 
 **Validation rules (client or server):**
 
-- Location: required (or default city if product allows)
+- City: required
+- Area: optional; if selected, further narrows results within the city
 - Budget: enum `low | medium | high`
 - Cuisine: optional but recommended; empty = no cuisine filter
 - Minimum rating: numeric, clamped to dataset scale (e.g. 0–5)
@@ -190,7 +191,7 @@ flowchart LR
 
 | Raw concern | Normalized behavior |
 |-------------|---------------------|
-| Location strings | Canonical city/area labels; trim, case-fold for matching |
+| Location strings | Extract canonical city and area/locality; trim, case-fold for matching |
 | Cuisine | Split multi-value strings; primary + tags list |
 | Cost | Map to `BudgetTier` (low/medium/high) using thresholds or dataset field |
 | Rating | Float; handle missing as exclude or default per policy |
@@ -227,7 +228,8 @@ location match → cuisine match → min rating → budget tier → (optional) k
 
 | Filter | Logic |
 |--------|--------|
-| **Location** | Restaurant location/city contains or equals user location (normalized) |
+| **City** | Restaurant location/city equals the selected city (normalized) |
+| **Area** | Optional: restaurant area/locality matches the selected neighborhood |
 | **Cuisine** | User cuisine in restaurant cuisine list (case-insensitive) |
 | **Minimum rating** | `restaurant.rating >= preferences.minRating` |
 | **Budget** | `restaurant.budgetTier === preferences.budget` or cost within tier band |
@@ -330,7 +332,8 @@ erDiagram
 |-------|------|-------------|
 | `id` | string | Stable unique ID (generated or from dataset) |
 | `name` | string | Restaurant name |
-| `location` | string | City/area for display and filter |
+| `location` | string | Canonical city for filtering |
+| `area` | string | Neighborhood/locality for display and optional city-level narrowing |
 | `cuisine` | string[] | One or more cuisines |
 | `rating` | number | Aggregate rating |
 | `estimatedCost` | string \| number | Display cost (e.g. "₹500 for two") |
@@ -342,6 +345,7 @@ erDiagram
 | Field | Type | Required |
 |-------|------|----------|
 | `location` | string | Yes |
+| `area` | string | No |
 | `budget` | `low \| medium \| high` | Yes |
 | `cuisine` | string | No |
 | `minRating` | number | No (default: 0) |

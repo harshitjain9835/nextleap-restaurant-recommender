@@ -69,6 +69,18 @@ def get_distinct_locations() -> list[str]:
     return sorted({r.location for r in catalog})
 
 
+def get_distinct_areas(city: str | None = None) -> list[str]:
+    """Areas/neighborhoods for a given city."""
+    catalog = get_catalog()
+    normalized_city = city.strip().lower() if city else None
+    areas = {
+        r.area
+        for r in catalog
+        if r.area and (normalized_city is None or r.location.strip().lower() == normalized_city)
+    }
+    return sorted(areas)
+
+
 def get_distinct_cuisines() -> list[str]:
     """Unique cuisines across catalog."""
     catalog = get_catalog()

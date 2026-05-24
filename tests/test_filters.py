@@ -113,6 +113,14 @@ def test_apply_filters_location_only(catalog: list[Restaurant], filter_settings:
     assert "budget" in result.applied_filters
 
 
+def test_apply_filters_area_within_bangalore(catalog: list[Restaurant], filter_settings: Settings):
+    prefs = UserPreferences(location="Bangalore", area="Koramangala", budget="high")
+    result = apply_filters(catalog, prefs, settings=filter_settings)
+    assert len(result.candidates) == 1
+    assert result.candidates[0].id == "r1"
+    assert "area" in result.applied_filters
+
+
 def test_apply_filters_cuisine_and_rating(catalog: list[Restaurant], filter_settings: Settings):
     # r1: Italian, 4.5, high — no match for medium budget
     prefs = UserPreferences(

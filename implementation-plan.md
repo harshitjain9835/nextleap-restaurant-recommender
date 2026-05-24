@@ -130,7 +130,7 @@ projects/
 | --- | ---------------------- | ---------------------------------------------------------------------------------------- |
 | 1.1 | Hugging Face loader    | `app/data/loader.py`: load `ManikaSaini/zomato-restaurant-recommendation` via `datasets` |
 | 1.2 | Field mapping          | Map raw columns → `Restaurant` fields; inspect dataset schema on first run               |
-| 1.3 | Normalization          | Trim names; canonicalize location (case-fold); split cuisine strings to `list[str]`      |
+| 1.3 | Normalization          | Trim names; extract canonical city and area/locality; split cuisine strings to `list[str]`      |
 | 1.4 | Budget tier derivation | Map cost/price field → `low | medium | high` using `BUDGET_THRESHOLDS` from config       |
 | 1.5 | Rating handling        | Coerce to float; policy for missing (exclude row or default—document choice)             |
 | 1.6 | Stable IDs             | Generate `id` (hash of name+location or row index) for LLM join                          |
@@ -180,7 +180,7 @@ projects/
 | #   | Task                  | Details                                                                              |
 | --- | --------------------- | ------------------------------------------------------------------------------------ |
 | 2.1 | Filter module         | `app/integration/filters.py`: `apply_filters(catalog, preferences) -> CandidateList` |
-| 2.2 | Location filter       | Normalized substring/equality match on `restaurant.location`                         |
+| 2.2 | Location filter       | Normalize and match city first, then optionally filter by selected area/locality       |
 | 2.3 | Cuisine filter        | Skip if user cuisine empty; else case-insensitive match in `restaurant.cuisine`      |
 | 2.4 | Minimum rating filter | `rating >= minRating` (default 0)                                                    |
 | 2.5 | Budget filter         | `restaurant.budgetTier == preferences.budget`                                        |
@@ -317,7 +317,7 @@ projects/
 | --- | ------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | 5.1 | Choose UI framework | Streamlit recommended for MVP (architecture §10.1)                                                                  |
 | 5.2 | App entry           | `app/ui/app.py` or `streamlit_app.py`; call `load_catalog()` on startup                                             |
-| 5.3 | Preference form     | Location (dropdown from unique cities in catalog), budget select, cuisine, min rating slider, additional prefs text |
+| 5.3 | Preference form     | City dropdown from dataset cities plus optional area/locality dropdown for selected city, budget select, cuisine, min rating slider, additional prefs text |
 | 5.4 | Submit handler      | Invoke `recommend()`; show spinner during LLM call                                                                  |
 | 5.5 | Results cards       | Name, cuisine, rating, estimated cost, rank, AI explanation                                                         |
 | 5.6 | Summary block       | Display LLM `summary` when present                                                                                  |
@@ -343,7 +343,7 @@ projects/
 
 ### UX checklist
 
-- Location options populated from dataset (avoid free-text mismatch)
+- City and area/locality options populated from dataset (avoid free-text mismatch)
 - Results scannable (rating prominent, explanation below fold OK)
 - Loading indicator during LLM (dominant latency per §9.4)
 

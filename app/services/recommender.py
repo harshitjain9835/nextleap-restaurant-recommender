@@ -60,6 +60,7 @@ def _merge_recommendations(
                 cuisine=restaurant.cuisine,
                 rating=restaurant.rating,
                 estimatedCost=restaurant.estimated_cost,
+                area=restaurant.area,
                 rank=item.rank,
                 explanation=item.explanation,
             )

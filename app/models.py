@@ -25,6 +25,7 @@ class Restaurant(BaseModel):
 
 class UserPreferences(BaseModel):
     location: str
+    area: str = ""
     budget: BudgetTier
     cuisine: str = ""
     min_rating: float = Field(default=0.0, alias="minRating", ge=0, le=5)
@@ -48,6 +49,7 @@ class Recommendation(BaseModel):
     cuisine: list[str]
     rating: float
     estimated_cost: str = Field(alias="estimatedCost")
+    area: str | None = None
     rank: int
     explanation: str
 

@@ -50,6 +50,15 @@ def matches_cuisine(restaurant: Restaurant, user_cuisine: str) -> bool:
     return False
 
 
+def matches_area(restaurant: Restaurant, user_area: str) -> bool:
+    """Match a restaurant by neighborhood/area when the user selects one."""
+    query = (user_area or "").strip().lower()
+    if not query:
+        return True
+    area_text = (restaurant.area or "").strip().lower()
+    return bool(area_text) and (area_text == query or query in area_text)
+
+
 def matches_min_rating(restaurant: Restaurant, min_rating: float) -> bool:
     return restaurant.rating >= min_rating
 
@@ -102,6 +111,13 @@ def apply_filters(
     user_city = normalize_location(preferences.location)
     current = [r for r in current if matches_location(r, user_city)]
     logger.debug("After location (%s): %d", user_city, len(current))
+
+    # Area / neighborhood (optional)
+    area_query = (preferences.area or "").strip()
+    if area_query:
+        applied.append("area")
+        current = [r for r in current if matches_area(r, area_query)]
+        logger.debug("After area (%s): %d", area_query, len(current))
 
     # Cuisine (optional)
     cuisine_query = (preferences.cuisine or "").strip()

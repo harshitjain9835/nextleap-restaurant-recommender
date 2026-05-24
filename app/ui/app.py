@@ -42,10 +42,36 @@ def build_user_preferences(locations: list[str], cuisines: list[str]) -> UserPre
         st.markdown("<div class=hero>", unsafe_allow_html=True)
         col1, col2 = st.columns([3, 1])
         with col1:
-            location = st.selectbox("Location", options=locations)
+            # If the catalog contains only one city, surface neighborhoods as the primary location choice.
+            if len(locations) == 1:
+                selected_city = locations[0]
+                st.markdown(f"**City:** {selected_city}")
+                area_options = store.get_distinct_areas(selected_city)
+                if area_options:
+                    location_choice = st.selectbox(
+                        f"Select a neighborhood in {selected_city}",
+                        options=["Any"] + area_options,
+                        key="location_area"
+                    )
+                    st.caption(
+                        "The catalog is currently for Bangalore, so the location lookup uses Bangalore neighborhoods."
+                    )
+                else:
+                    location_choice = "Any"
+                location = selected_city
+            else:
+                location = st.selectbox("City", options=locations)
+                area_options = store.get_distinct_areas(location)
+                if area_options:
+                    location_choice = st.selectbox("Area (optional)", options=["Any"] + area_options)
+                else:
+                    location_choice = "Any"
             cuisine_choice = st.selectbox("Cuisine", options=["Any"] + cuisines)
         with col2:
             budget = st.selectbox("Budget", options=["low", "medium", "high"], index=1)
+
+        if area_options:
+            st.caption("Filter within the selected city by neighborhood/area.")
 
         min_rating = st.slider("Minimum rating", min_value=0.0, max_value=5.0, value=0.0, step=0.5)
         additional_preferences = st.text_area(
@@ -61,6 +87,7 @@ def build_user_preferences(locations: list[str], cuisines: list[str]) -> UserPre
 
         return UserPreferences(
             location=location,
+            area="" if location_choice == "Any" else location_choice,
             budget=budget,
             cuisine="" if cuisine_choice == "Any" else cuisine_choice,
             minRating=min_rating,
@@ -103,6 +130,8 @@ def render_recommendations(response) -> None:
                 st.image("https://images.unsplash.com/photo-1544025162-d76694265947?w=800", use_column_width=True)
             with cols[1]:
                 st.markdown(f"### {rec.name}  ")
+                if getattr(rec, 'area', None):
+                    st.markdown(f"**Area:** {rec.area}")
                 st.markdown(f"**Cuisine:** {', '.join(rec.cuisine)}")
                 st.markdown(f"**Rating:** {rec.rating} — **Cost:** {format_cost(rec.estimated_cost)}")
                 st.write(rec.explanation)
