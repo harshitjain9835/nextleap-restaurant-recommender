@@ -1,0 +1,15 @@
+gantt
+    title Implementation timeline
+    dateFormat YYYY-MM-DD
+    section Foundation
+        Phase 0 Setup           :p0, 2026-01-01, 2d
+    section Data
+        Phase 1 Data layer      :p1, after p0, 4d
+    section Core logic
+        Phase 2 Filters         :p2, after p1, 3d
+        Phase 3 LLM engine      :p3, after p2, 4d
+        Phase 4 Orchestration   :p4, after p3, 3d
+    section UX
+        Phase 5 UI              :p5, after p4, 4d
+    section Ship
+        Phase 6 Test and deploy :p6, after p5, 3d

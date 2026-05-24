@@ -1,0 +1,31 @@
+/* Minimal styles to approximate the stitch design look */
+body {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+.brand {
+  font-weight: 700;
+  color: #c0392b;
+  font-size: 20px;
+  padding: 12px 0;
+}
+.hero-title {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #111;
+}
+.hero {
+  background-image: linear-gradient(0deg, rgba(255,255,255,0.9), rgba(255,255,255,0.9));
+  padding: 12px 0 24px 0;
+  margin-bottom: 16px;
+}
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 12px;
+}
+
+/* small responsive tweaks */
+@media (max-width: 640px) {
+  .hero-title { font-size: 24px; }
+}

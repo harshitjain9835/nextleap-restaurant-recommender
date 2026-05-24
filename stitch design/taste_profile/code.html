@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GastroAI - Taste Profile</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "on-primary-fixed-variant": "#92001c",
+                      "on-background": "#191c1d",
+                      "on-tertiary-fixed-variant": "#005229",
+                      "inverse-primary": "#ffb3b1",
+                      "tertiary-fixed": "#7cfca5",
+                      "on-primary": "#ffffff",
+                      "outline": "#8f6f6e",
+                      "surface-container-low": "#f3f4f5",
+                      "surface": "#f8f9fa",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#2e3132",
+                      "surface-bright": "#f8f9fa",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed": "#410007",
+                      "inverse-on-surface": "#f0f1f2",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#c7c6c7",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#edeeef",
+                      "secondary-container": "#e3e2e3",
+                      "on-surface-variant": "#5b403f",
+                      "primary-fixed": "#ffdad8",
+                      "surface-container-highest": "#e1e3e4",
+                      "on-secondary-container": "#646465",
+                      "outline-variant": "#e4bebc",
+                      "surface-dim": "#d9dadb",
+                      "on-surface": "#191c1d",
+                      "secondary-fixed": "#e3e2e3",
+                      "tertiary": "#006a36",
+                      "primary-fixed-dim": "#ffb3b1",
+                      "background": "#f8f9fa",
+                      "primary-container": "#db313f",
+                      "tertiary-fixed-dim": "#5ede8b",
+                      "on-primary-container": "#fffbff",
+                      "tertiary-container": "#008646",
+                      "surface-tint": "#bb162c",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed-variant": "#464748",
+                      "on-secondary-fixed": "#1a1c1d",
+                      "secondary": "#5e5e5f",
+                      "primary": "#b7122a",
+                      "surface-container-high": "#e7e8e9",
+                      "on-tertiary-container": "#f6fff4",
+                      "on-tertiary-fixed": "#00210d",
+                      "surface-variant": "#e1e3e4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "48px",
+                      "gutter": "16px",
+                      "max-width": "1280px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "label-md": ["Inter"],
+                      "caption": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Ambient Shadow for Interactive Elements */
+        .ambient-shadow:hover {
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #b7122a;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #e1e3e4;
+            border-radius: 2px;
+        }
+        .slider-fill {
+            position: absolute;
+            height: 4px;
+            background: #b7122a;
+            border-radius: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Swipe Animation classes */
+        .swipe-left { animation: swipeL 0.4s ease-out forwards; }
+        .swipe-right { animation: swipeR 0.4s ease-out forwards; }
+        @keyframes swipeL { to { transform: translateX(-100%) rotate(-10deg); opacity: 0; } }
+        @keyframes swipeR { to { transform: translateX(100%) rotate(10deg); opacity: 0; } }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<nav class="bg-surface dark:bg-background w-full top-0 sticky border-b border-outline-variant dark:border-outline z-40">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop flex items-center justify-between h-16">
+<!-- Brand -->
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed cursor-pointer transition-all duration-200 active:scale-95">
+                GastroAI
+            </div>
+<!-- Center Nav (Hidden on Mobile) -->
+<div class="hidden md:flex items-center gap-6">
+<a class="text-secondary-fixed-variant font-medium hover:text-primary-container transition-colors font-body-lg text-body-lg" href="#">Discover</a>
+<a class="text-secondary-fixed-variant font-medium hover:text-primary-container transition-colors font-body-lg text-body-lg" href="#">Collections</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 hover:text-primary-container transition-colors font-body-lg text-body-lg" href="#">Preferences</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-2 text-body-md font-body-md focus:outline-none focus:border-primary w-48 transition-all" placeholder="Search tastes..." type="text"/>
+</div>
+<button class="text-primary dark:text-primary-fixed hover:text-primary-container transition-colors cursor-pointer active:scale-95 p-2 rounded-full hover:bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined icon-fill">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-8 pb-32 md:pb-16">
+<!-- Header Section -->
+<header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-primary text-on-primary rounded-full px-3 py-1 flex items-center gap-1 font-label-md text-label-md w-fit">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                        AI-Curated Profile
+                    </span>
+<span class="text-secondary font-label-md text-label-md uppercase tracking-wider">Level 3 Gastronome</span>
+</div>
+<h1 class="font-display-lg text-display-lg hidden md:block">Your Culinary DNA</h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:hidden">Your Culinary DNA</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">
+                    Train our neural network by interacting with visually rich dishes below. The more you engage, the sharper our recommendations become.
+                </p>
+</div>
+<button class="bg-surface border border-primary text-primary hover:bg-primary hover:text-on-primary transition-colors font-label-md text-label-md px-6 py-3 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">restart_alt</span>
+                Reset Model
+            </button>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Tile 1: Visual Builder (Swipe Interface) -->
+<div class="col-span-1 md:col-span-8 md:row-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col ambient-shadow">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface">
+<h2 class="font-headline-md text-headline-md">Visual Taste Builder</h2>
+<span class="font-caption text-caption text-on-surface-variant">Image 1 of 50 in daily set</span>
+</div>
+<div class="relative flex-grow min-h-[400px] bg-surface-variant overflow-hidden flex items-center justify-center p-4">
+<!-- Photo Stack -->
+<div class="relative w-full max-w-md aspect-[4/5] rounded-xl overflow-hidden shadow-lg transition-transform duration-300 z-10 bg-surface" id="swipe-card">
+<img alt="Modern Dish" class="w-full h-full object-cover" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4N4evkpX9pY40u-eI3JSl3kJ60EO0Hr_Fe0-0-JdRvNiwMoqXS3KplVdeYhpG9QtbXOGIzw1zEp0noiLsUaoe31JnHqT39VBl-mEJl0U4XGRnWeWpzhmCT2xevAWdTJj19LQd0eSs8T_OaNZWBcdnhwbkhfT6InuAyfZRbDuFrLC0WKsv5HYdmeVlsjtlDTUm4oTYkNY_fmoOzWtxrIajo9Nvh18ToeGwfQ8zkywXrJFNLtCt_2UuKwfE0Of7oMi7VjK67F72sfhM"/>
+<!-- Overlay gradients -->
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full p-6 text-on-primary">
+<div class="flex gap-2 mb-2">
+<span class="bg-surface/20 backdrop-blur-md rounded px-2 py-1 font-caption text-caption">Umami Heavy</span>
+<span class="bg-surface/20 backdrop-blur-md rounded px-2 py-1 font-caption text-caption">Seared</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-white">Hokkaido Scallops</h3>
+</div>
+</div>
+<!-- Background Card (next in stack) -->
+<div class="absolute w-full max-w-md aspect-[4/5] rounded-xl overflow-hidden shadow-sm z-0 scale-95 opacity-50 translate-y-4">
+<img alt="Next Dish" class="w-full h-full object-cover" data-alt="A striking digital installation art piece featuring glowing, generative geometric shapes suspended in a vast, minimalist gallery space. The room is illuminated by high-key, soft white lighting that creates a bright, modern light-mode aesthetic. The artwork relies on a sophisticated palette of deep blacks and pristine whites, punctuated by intense accents of vibrant red. The mood is serene yet technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdoGawDQ9IH5H0nZR8_bOxRbNjrljQRBapUL3unzScEveXAwzrfQTFKzinDwwj8zShlNHgoQZ4DuV47LyyrO43__-XLbd9YA1JOFO1g0U57Bj41hZ0T1YoMf8Cxw98ufMmzQ02Z-vdUNzA8Rf-tXFQ7OusJKwXtdSpwBPkJv_J2zLIP02SUXjUHv_ZoDcHZXMqEa0NtB2O8180O4A38CQoIJxn2aZjqpwQGgACkEgPYYxVNJrIUm0ps3pBa4iObPv2vfkU1ddaOCNO"/>
+</div>
+</div>
+<!-- Swipe Controls -->
+<div class="p-6 bg-surface flex justify-center gap-8 items-center border-t border-outline-variant">
+<button class="w-16 h-16 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high transition-colors active:scale-90" onclick="document.getElementById('swipe-card').classList.add('swipe-left')">
+<span class="material-symbols-outlined text-[32px]">close</span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-low text-on-surface-variant flex items-center justify-center hover:bg-surface-container transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[24px]">bookmark</span>
+</button>
+<button class="w-16 h-16 rounded-full bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container hover:text-on-primary-container shadow-md transition-all active:scale-90" onclick="document.getElementById('swipe-card').classList.add('swipe-right')">
+<span class="material-symbols-outlined text-[32px] icon-fill">favorite</span>
+</button>
+</div>
+</div>
+<!-- Tile 2: Culinary DNA Chart -->
+<div class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 ambient-shadow flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md">Flavor Profile</h2>
+<span class="material-symbols-outlined text-primary text-[24px]">analytics</span>
+</div>
+<div class="flex-grow flex flex-col justify-center gap-4">
+<!-- Bar 1 -->
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1 text-on-surface-variant">
+<span>Umami</span>
+<span class="text-primary font-bold">85%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<!-- Bar 2 -->
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1 text-on-surface-variant">
+<span>Spicy</span>
+<span class="text-primary font-bold">60%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 60%; opacity: 0.8;"></div>
+</div>
+</div>
+<!-- Bar 3 -->
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1 text-on-surface-variant">
+<span>Sweet</span>
+<span class="text-on-surface-variant">30%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant rounded-full" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Bar 4 -->
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1 text-on-surface-variant">
+<span>Bitter</span>
+<span class="text-on-surface-variant">45%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant rounded-full" style="width: 45%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tile 3: Dietary Restrictions -->
+<div class="col-span-1 md:col-span-4 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 ambient-shadow">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md">Dietary Needs</h2>
+<span class="material-symbols-outlined text-secondary text-[24px]">verified_user</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<!-- Active Chip -->
+<button class="bg-primary text-on-primary border border-primary px-4 py-2 rounded-full font-label-md text-label-md flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px] icon-fill">check_circle</span>
+                        Gluten-Free
+                    </button>
+<!-- Inactive Chips -->
+<button class="bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full font-label-md text-label-md transition-colors">
+                        Vegan
+                    </button>
+<button class="bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full font-label-md text-label-md transition-colors">
+                        Vegetarian
+                    </button>
+<button class="bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full font-label-md text-label-md transition-colors">
+                        Nut Allergy
+                    </button>
+<button class="bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full font-label-md text-label-md transition-colors">
+                        Dairy-Free
+                    </button>
+<button class="bg-surface border border-outline-variant text-on-surface-variant hover:bg-surface-container-low px-4 py-2 rounded-full font-label-md text-label-md transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                        Add Custom
+                    </button>
+</div>
+</div>
+<!-- Tile 4: Environmental Preferences (Sliders) -->
+<div class="col-span-1 md:col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 ambient-shadow mt-4">
+<h2 class="font-headline-md text-headline-md mb-6">Dining Environment Priorities</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Slider 1 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between font-label-md text-label-md text-on-surface">
+<span>Vibe: Intimate</span>
+<span>Vibe: Energetic</span>
+</div>
+<div class="relative w-full py-2">
+<div class="slider-fill" style="width: 70%;"></div>
+<input max="100" min="0" type="range" value="70"/>
+</div>
+</div>
+<!-- Slider 2 -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between font-label-md text-label-md text-on-surface">
+<span>Price: Value</span>
+<span>Price: Premium</span>
+</div>
+<div class="relative w-full py-2">
+<div class="slider-fill" style="width: 40%;"></div>
+<input max="100" min="0" type="range" value="40"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Shared Component - Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 lg:hidden border-t border-outline-variant dark:border-outline bg-surface/95 backdrop-blur-md pb-safe">
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high transition-transform active:scale-90 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</a>
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high transition-transform active:scale-90 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="font-caption text-caption mt-1">Search</span>
+</a>
+<!-- Inactive -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high transition-transform active:scale-90 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined text-[24px]">temp_preferences_custom</span>
+<span class="font-caption text-caption mt-1">Matches</span>
+</a>
+<!-- Active Tab -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 w-16 h-16 -mt-6 shadow-lg transition-transform active:scale-90" href="#">
+<span class="material-symbols-outlined text-[28px] icon-fill">person</span>
+<span class="font-caption text-caption mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple script to update slider fills dynamically
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('input', (e) => {
+                const fill = e.target.previousElementSibling;
+                fill.style.width = e.target.value + '%';
+            });
+        });
+
+        // Reset animation helper
+        document.getElementById('swipe-card').addEventListener('animationend', function() {
+            this.classList.remove('swipe-left', 'swipe-right');
+            // In a real app, load next image here
+        });
+    </script>
+</body></html>

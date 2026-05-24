@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GastroAI - AI-Powered Restaurant Recommendations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#92001c",
+                    "on-background": "#191c1d",
+                    "on-tertiary-fixed-variant": "#005229",
+                    "inverse-primary": "#ffb3b1",
+                    "tertiary-fixed": "#7cfca5",
+                    "on-primary": "#ffffff",
+                    "outline": "#8f6f6e",
+                    "surface-container-low": "#f3f4f5",
+                    "surface": "#f8f9fa",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "surface-bright": "#f8f9fa",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#410007",
+                    "inverse-on-surface": "#f0f1f2",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#c7c6c7",
+                    "on-tertiary": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "secondary-container": "#e3e2e3",
+                    "on-surface-variant": "#5b403f",
+                    "primary-fixed": "#ffdad8",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-secondary-container": "#646465",
+                    "outline-variant": "#e4bebc",
+                    "surface-dim": "#d9dadb",
+                    "on-surface": "#191c1d",
+                    "secondary-fixed": "#e3e2e3",
+                    "tertiary": "#006a36",
+                    "primary-fixed-dim": "#ffb3b1",
+                    "background": "#f8f9fa",
+                    "primary-container": "#db313f",
+                    "tertiary-fixed-dim": "#5ede8b",
+                    "on-primary-container": "#fffbff",
+                    "tertiary-container": "#008646",
+                    "surface-tint": "#bb162c",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#464748",
+                    "on-secondary-fixed": "#1a1c1d",
+                    "secondary": "#5e5e5f",
+                    "primary": "#b7122a",
+                    "surface-container-high": "#e7e8e9",
+                    "on-tertiary-container": "#f6fff4",
+                    "on-tertiary-fixed": "#00210d",
+                    "surface-variant": "#e1e3e4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "gutter": "16px",
+                    "max-width": "1280px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "caption": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for clean horizontal scrolls */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg antialiased">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-background text-primary dark:text-primary-fixed font-body-lg text-body-lg w-full top-0 sticky border-b border-outline-variant dark:border-outline z-40 transition-colors duration-300">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop flex items-center justify-between h-16">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed cursor-pointer transition-all duration-200 active:scale-95">
+                GastroAI
+            </div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary-container transition-colors" data-icon="search">search</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary-container transition-colors" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<main class="pb-24 lg:pb-0">
+<!-- Hero Section -->
+<section class="relative w-full min-h-[716px] flex flex-col justify-center items-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0 bg-cover bg-center opacity-20 dark:opacity-10" data-alt="A striking, vibrant overhead view of a beautifully plated modern dish on a pristine white ceramic plate, resting on a textured minimalist table. The lighting is high-key and bright, emphasizing a clean, modern light-mode aesthetic. Vivid reds and fresh greens pop against the neutral background, conveying a sense of culinary perfection and high-tech curation." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNRwiuVMNWU03EPVMhku_L51s2Jy5Q2DGZ9acW2MAXkP16i5hOCOmROt3OsX1StdvwbFkT5g4E1K1C-3nd8voLeb3J_1nHVfsR0ODp9n18PKIF-hJADY9k2q2BKY3tUvZLOSCcVBTc8NjhWU4LUOyzV6QBLrRMORwKzkUT3F3V6JrtzJxqKPGC0XfxvOWwsA3jbY08wL_slSPY3oJMnG_94pcXXYKVxB1_OqKloScitpI0dHgbqXe_lNm1ePTsHodvLkhpKK2fezbB');"></div>
+<div class="relative z-10 w-full max-w-4xl mx-auto text-center mt-12 mb-8">
+<h1 class="font-display-lg text-display-lg text-on-background mb-6">Discover your next <span class="text-primary">obsession</span>.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12 max-w-2xl mx-auto">NeuralTaste AI analyzes millions of flavor profiles to find exactly what you're craving right now.</p>
+<!-- Massive Search Bar -->
+<div class="bg-surface rounded-full p-2 flex items-center shadow-[0_8px_24px_rgba(0,0,0,0.06)] border border-outline-variant transition-all hover:shadow-[0_12px_32px_rgba(0,0,0,0.1)] w-full max-w-3xl mx-auto">
+<div class="pl-6 pr-4 text-on-surface-variant">
+<span class="material-symbols-outlined text-3xl">search</span>
+</div>
+<input class="w-full bg-transparent border-none outline-none font-body-lg text-body-lg text-on-background placeholder:text-on-surface-variant focus:ring-0 py-4" placeholder="Cravings, restaurants, or cuisines..." type="text"/>
+<button class="bg-primary text-on-primary rounded-full px-8 py-4 font-label-md text-label-md hover:bg-primary-container transition-colors ml-2 hidden md:block">
+                        Find Magic
+                    </button>
+</div>
+</div>
+</section>
+<!-- AI Pick of the Day (Bento Card) -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-16">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary fill-icon">auto_awesome</span>
+<h2 class="font-headline-lg text-headline-lg text-on-background">AI Pick of the Day</h2>
+</div>
+<div class="bg-surface rounded-xl overflow-hidden border border-outline-variant hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-shadow duration-300 flex flex-col md:flex-row group cursor-pointer">
+<div class="w-full md:w-3/5 h-64 md:h-[400px] relative overflow-hidden">
+<img alt="AI Recommended Dish" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A close-up, highly detailed shot of a gourmet sushi roll arrangement on a dark slate board, bathed in soft, natural daylight. The vibrant reds of the fresh tuna and the crisp greens of avocado stand out against the clean, minimalist setting, aligning with a modern, high-end culinary aesthetic. The image exudes freshness and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdTnvhG9UK3gfdvFATJVKPpQs8xRSy-NcIGG46aZSeQOc37Dn_ZPa1d3nEv5kBzrNJIJFbtFeU8d0FwzYxLKzsaYCDrDcpJV8sK9l5ihLBVttMoOTpM-4xukioMEDv9PIPN4Zb0vdDaSOOBDfyY8PKDaZlfPK7IKCJB4HaxNU0PBjaUsWvgZZUpgi4rncW9uzBoEhtrWGbVUFfO-R8azj3FGgX27isZ6z_u-EPJ98QzeR4JRu7Z3dh5U5zK6DmzN6_kZzNxg7dSAq3"/>
+<div class="absolute top-4 left-4 bg-primary text-on-primary rounded-full px-4 py-2 font-label-md text-label-md flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm">colors_spark</span>
+                        98% Match
+                    </div>
+</div>
+<div class="w-full md:w-2/5 p-8 flex flex-col justify-center">
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-surface-container py-1 px-3 rounded-full font-caption text-caption text-on-surface-variant border border-outline-variant">Japanese</span>
+<span class="bg-surface-container py-1 px-3 rounded-full font-caption text-caption text-on-surface-variant border border-outline-variant">Omakase</span>
+<span class="bg-surface-container py-1 px-3 rounded-full font-caption text-caption text-on-surface-variant border border-outline-variant">$$$$</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-2 group-hover:text-primary transition-colors">Sushi Nakazawa</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Based on your recent love for minimalist plating and high-grade seafood, our neural net predicts this West Village gem will exceed your expectations.</p>
+<button class="self-start text-primary font-label-md text-label-md flex items-center gap-2 group/btn">
+                        Book a Table
+                        <span class="material-symbols-outlined transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Mood-based Dining (Scrollable) -->
+<section class="max-w-max-width mx-auto pl-margin-mobile md:pl-margin-desktop py-16 overflow-hidden">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-8 px-0 pr-margin-mobile md:pr-margin-desktop">Mood-based Dining</h2>
+<div class="flex gap-6 overflow-x-auto no-scrollbar pb-8 pr-margin-mobile md:pr-margin-desktop">
+<!-- Card 1 -->
+<div class="min-w-[280px] md:min-w-[340px] flex-shrink-0 cursor-pointer group">
+<div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative border border-outline-variant">
+<img alt="Date Night" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A moody, romantic restaurant interior illuminated by warm, low-level candlelight and subtle ambient lighting. The setting features modern, elegant table settings with hints of deep red accents in the decor. The atmosphere is intimate and sophisticated, capturing the essence of a high-end date night experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwM_x075Og11MVnNU4DNYJ9OE0k95OPKUZM37pMnQlyxkMIGi5JaayH-Zl6JcvDIUtiyK0a_savM78Wyb2VHSw3tzOVHMhIuWSO1e1RQPitShRTOmljkRV4qVDwR3bIBOsUBCuBGQcU_K15lOLhrfUArUO_iFahPY0Tf_9uuCG4tK7HZt3hTNg6fVmUoHgRJntRrHq6Gwzj7zr_XUCUah92zBKCo0rpAr36f_TbxenDjRiGmlercvVtFIsKXX6x36D46lwjRff3g4j"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 font-headline-md text-headline-md text-white">Date Night</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Intimate settings with exceptional wine pairings.</p>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[280px] md:min-w-[340px] flex-shrink-0 cursor-pointer group">
+<div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative border border-outline-variant">
+<img alt="Power Lunch" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A bright, airy, and modern cafe setting during the daytime, featuring a clean white marble table adorned with a beautifully crafted espresso and a light, healthy salad. The lighting is crisp and natural, emphasizing a productive, high-energy environment suitable for a professional yet stylish business lunch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV8SsTyj4Qi48pUD-JXmXA-sTzKKXb9UTJ1h_JxMogjQyADPKSRcTFW3F77sro-0cyYsyOZRnm69HfgJUT_c8S11Qd2CRIqrh2dlZqHou2hyWrXqWy4LNGF-hvwStdj5S8GnTzypXMTL83ZoKEUCZ1VrhejY5aNqwRCr2GB37G9-pwPE7xqonkdo0S3nEQ5vu9msb5iITeNQGhki0ZjQ9D1PpFDFJPYJmDPceA-d_nYYuhK5Zkh6BYDNAs-Cc7BKOzhRIrjKi45HpR"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 font-headline-md text-headline-md text-white">Power Lunch</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Fast, impressive, and central locations.</p>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[280px] md:min-w-[340px] flex-shrink-0 cursor-pointer group">
+<div class="w-full h-48 rounded-xl overflow-hidden mb-4 relative border border-outline-variant">
+<img alt="Late Night Bites" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A vibrant, slightly neon-lit street food scene showcasing a sizzling pan of noodles or skewers. The aesthetic mixes dark urban night vibes with bright, appetizing pops of red and orange from the food and surrounding signs. It conveys a dynamic, energetic mood typical of exciting late-night culinary explorations." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPgGV3D0nqo_tLbbhS5iO_TKXbTbWiiW-ubMJwcTPbPHuUhiiZya_ZJVHG3xOMfbDEFQzyUXaP4tm94u_Mgh5-mm8BjssWOnJWJivQTN8n5KNbgAjXL1FOtBLvpwHNmaikCDcX-ReiGKWpqju3n4gxQy7aMmVmKm529PrKsG-Y5HNu-Jx-5cJ817N1FI1iG0fcGTHgftEWHbEpBCJDXvRFKzaQR1hzcYurzz_8U7TSu7Cp2ztGWY0CZdESCPjjWc6cGUzEVs1be58P"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<h3 class="absolute bottom-4 left-4 font-headline-md text-headline-md text-white">Late Night Bites</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Open after midnight for those post-event cravings.</p>
+</div>
+</div>
+</section>
+<!-- AI Palate Section -->
+<section class="bg-surface-container-low py-20 mt-8">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div>
+<span class="text-tertiary font-label-md text-label-md uppercase tracking-wider mb-2 block">NeuralTaste Technology</span>
+<h2 class="font-display-lg text-display-lg text-on-background mb-6">We understand your palate better than you do.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8">
+                        By analyzing your past dining experiences, preferred ingredients, and even visual aesthetics, our engine constructs a unique sensory profile. We don't just recommend popular spots; we find the places that resonate with your specific taste architecture.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">analytics</span>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-background text-lg">Predictive Scoring</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Every restaurant receives a personalized match score based on 50+ data points.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">tune</span>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-background text-lg">Dynamic Preferences</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Your profile evolves as you explore new cuisines and leave feedback.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="relative">
+<div class="w-full h-[500px] bg-surface rounded-2xl border border-outline-variant overflow-hidden shadow-lg relative z-10">
+<img alt="Food Data Visualization" class="w-full h-full object-cover" data-alt="An abstract, modern composition blending high-quality culinary imagery with subtle, glowing digital data overlays. A perfectly seared piece of meat or vibrant vegetables sit on a clean, light surface, surrounded by delicate red and green digital nodes and connecting lines. The image visually represents the fusion of organic taste and advanced artificial intelligence analysis." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBidfplaXvn3U04WqvnKi7bLAbhxIQomJLBinQCi77QPtxhSnwfQJLr1jTdUs9HUL0OTLRxpFdLtDxaqkYdB5DshttPjWkb2xHK1_kTIJSSB32Dd-jWpigZdtiAQUl9FWbjyUQ_C5Jveuhary4sa1lLqYGjw4ooOZHieUdnfeLCKO_IkJEtl9iROgthD8VuTSWgvWL_ULgPJK3gSrd1_8lYNLhcNMf3yuIVE2pa4TF9sHK-hIJfjBZq3rwzFN6XTPpFvJyd6sBuqTCV"/>
+</div>
+<!-- Decorative element -->
+<div class="absolute -bottom-6 -left-6 w-48 h-48 bg-primary/10 rounded-full blur-3xl z-0"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-highest text-primary dark:text-primary-fixed-dim font-caption text-caption w-full py-12 border-t border-outline-variant pb-28 lg:pb-12">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-1 mb-8 md:mb-0">
+<div class="font-headline-md text-headline-md font-bold text-on-surface mb-4">GastroAI</div>
+<p class="text-on-secondary-fixed-variant">© 2024 GastroAI Recommendation Engine. All rights reserved. Powered by NeuralTaste.</p>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-4">Explore</h4>
+<ul class="space-y-2">
+<li><a class="text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">About AI</a></li>
+<li><a class="text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Restaurant Partners</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-4">Legal</h4>
+<ul class="space-y-2">
+<li><a class="text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Privacy Policy</a></li>
+<li><a class="text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-label-md text-on-surface mb-4">Company</h4>
+<ul class="space-y-2">
+<li><a class="text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Careers</a></li>
+<li><a class="text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Contact Us</a></li>
+</ul>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile) -->
+<nav class="bg-surface dark:bg-background text-primary dark:text-primary-fixed font-caption text-caption docked full-width bottom-0 rounded-t-xl border-t border-outline-variant dark:border-outline bg-surface/95 backdrop-blur-md shadow-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 lg:hidden">
+<!-- Active: Home -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 w-12 h-12 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined fill-icon" data-icon="home">home</span>
+<span class="sr-only">Home</span>
+</a>
+<!-- Inactive: Search -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high active:scale-90 transition-transform rounded-xl p-2 w-12 h-12" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-[10px] mt-1 font-medium">Search</span>
+</a>
+<!-- Inactive: Matches -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high active:scale-90 transition-transform rounded-xl p-2 w-12 h-12" href="#">
+<span class="material-symbols-outlined" data-icon="temp_preferences_custom">temp_preferences_custom</span>
+<span class="text-[10px] mt-1 font-medium">Matches</span>
+</a>
+<!-- Inactive: Profile -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high active:scale-90 transition-transform rounded-xl p-2 w-12 h-12" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] mt-1 font-medium">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GastroAI - Search Results</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#92001c",
+                        "on-background": "#191c1d",
+                        "on-tertiary-fixed-variant": "#005229",
+                        "inverse-primary": "#ffb3b1",
+                        "tertiary-fixed": "#7cfca5",
+                        "on-primary": "#ffffff",
+                        "outline": "#8f6f6e",
+                        "surface-container-low": "#f3f4f5",
+                        "surface": "#f8f9fa",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#410007",
+                        "inverse-on-surface": "#f0f1f2",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c7c6c7",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "secondary-container": "#e3e2e3",
+                        "on-surface-variant": "#5b403f",
+                        "primary-fixed": "#ffdad8",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-secondary-container": "#646465",
+                        "outline-variant": "#e4bebc",
+                        "surface-dim": "#d9dadb",
+                        "on-surface": "#191c1d",
+                        "secondary-fixed": "#e3e2e3",
+                        "tertiary": "#006a36",
+                        "primary-fixed-dim": "#ffb3b1",
+                        "background": "#f8f9fa",
+                        "primary-container": "#db313f",
+                        "tertiary-fixed-dim": "#5ede8b",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-container": "#008646",
+                        "surface-tint": "#bb162c",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#464748",
+                        "on-secondary-fixed": "#1a1c1d",
+                        "secondary": "#5e5e5f",
+                        "primary": "#b7122a",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-container": "#f6fff4",
+                        "on-tertiary-fixed": "#00210d",
+                        "surface-variant": "#e1e3e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "gutter": "16px",
+                        "max-width": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom range slider styling for brand identity */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #b7122a;
+            margin-top: -6px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #e7e8e9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md pb-20 md:pb-0">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-background border-b border-outline-variant dark:border-outline flat no shadows z-40">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop flex items-center justify-between h-16">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">GastroAI</div>
+<div class="flex items-center gap-6">
+<!-- Embedded Search for Desktop Context -->
+<div class="hidden md:flex bg-surface-container-low rounded-full px-4 py-2 items-center gap-2 border border-outline-variant w-80">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 font-body-md text-body-md text-on-surface w-full p-0" placeholder="Spicy Thai in Downtown..." type="text" value="Spicy Thai"/>
+<span class="material-symbols-outlined text-primary cursor-pointer text-[20px]" data-icon="tune">tune</span>
+</div>
+<span class="material-symbols-outlined font-body-lg text-body-lg text-primary dark:text-primary-fixed cursor-pointer transition-all duration-200 active:scale-95 hover:text-primary-container" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-8 flex flex-col md:flex-row gap-8 flex-1 w-full">
+<!-- Neural Filters Sidebar -->
+<aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-6">
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm sticky top-24">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span> 
+                    Neural Filters
+                </h2>
+<!-- Dietary Base -->
+<div class="mb-6 border-b border-outline-variant pb-6">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-3">DIETARY BASE</h3>
+<div class="flex flex-wrap gap-2">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-4 py-1.5 rounded-full border border-primary transition-colors">Any</button>
+<button class="bg-surface text-on-surface font-label-md text-label-md px-4 py-1.5 rounded-full border border-outline-variant hover:bg-surface-container transition-colors">Vegetarian</button>
+<button class="bg-surface text-on-surface font-label-md text-label-md px-4 py-1.5 rounded-full border border-outline-variant hover:bg-surface-container transition-colors">Vegan</button>
+</div>
+</div>
+<!-- Spice Level -->
+<div class="mb-6 border-b border-outline-variant pb-6">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-4">SPICE TOLERANCE</h3>
+<div class="px-2">
+<input class="w-full appearance-none bg-transparent" max="5" min="1" type="range" value="4"/>
+<div class="flex justify-between mt-3 font-caption text-caption">
+<span class="text-secondary">Mild</span>
+<span class="text-primary font-bold">Inferno</span>
+</div>
+</div>
+</div>
+<!-- Atmosphere -->
+<div class="mb-6 border-b border-outline-variant pb-6">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-3">ATMOSPHERE MATRIX</h3>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center bg-primary border-primary">
+<span class="material-symbols-outlined text-[14px] text-on-primary" data-icon="check">check</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Intimate &amp; Quiet</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="w-5 h-5 rounded border border-outline-variant flex items-center justify-center bg-surface transition-colors group-hover:border-primary">
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Lively &amp; Energetic</span>
+</label>
+</div>
+</div>
+<!-- Action -->
+<button class="w-full bg-surface-container-low text-primary font-label-md text-label-md py-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="restart_alt">restart_alt</span> Reset Matrix
+                </button>
+</div>
+</aside>
+<!-- Results Canvas -->
+<section class="flex-1">
+<div class="mb-8">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-2">Curated Matches</h1>
+<p class="font-body-lg text-body-lg text-secondary">Neural network analyzed 142 local venues against your spice preferences and current mood signals.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Restaurant Card 1 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 group cursor-pointer flex flex-col">
+<div class="relative h-56 w-full overflow-hidden bg-surface-container">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img alt="Restaurant interior" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A vibrant, high-quality photograph of a modern Thai restaurant interior. The lighting is warm and moody, highlighting steaming, vibrant red and green curries on a dark wooden table. The aesthetic is upscale minimalist, featuring clean lines and deep contrasting shadows, accented by the brand's signature bold red tones in the decor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH5_4mTe_rqecpuVZESDCTQV15Byt6bK2UqTxTrBwe70P7Pv_mfUnLjE5KNH-hCu2031-BnLTbjWUyGkKeVwtQfH8XjrAT7IgMOB5XVKUGORrnsiuTL35ExUXTHFi7VgJqH5v-B_kmPHkW5-eSoRfp3MEVHgFMLUfvOoKQLUGn9eLyMdutUM4FOuTkwBWI_SkQ7xjAmrUmCOHWyiuj2NYVZVfYyWoKKpFuDdZO993DC63StVLfccZafRjVUvXjzyDjXNjhziwwOzX_"/>
+<!-- Badges Overlay -->
+<div class="absolute top-4 left-4 z-20 bg-primary text-on-primary px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-md text-label-md">98% Match</span>
+</div>
+<div class="absolute bottom-4 left-4 z-20">
+<h3 class="font-headline-md text-headline-md text-white mb-1">Lotus Fire Authentic</h3>
+<div class="flex gap-2">
+<span class="bg-white/20 backdrop-blur-md text-white font-caption text-caption px-2 py-0.5 rounded">$$$</span>
+<span class="bg-white/20 backdrop-blur-md text-white font-caption text-caption px-2 py-0.5 rounded">0.8 mi</span>
+</div>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 bg-surface-container-lowest">
+<div class="bg-surface-container-low p-4 rounded-lg mb-4 border border-outline-variant/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary shrink-0 text-[20px]" data-icon="bolt">bolt</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                                Because you love <strong class="text-on-surface">intense heat</strong> and recently saved three intimate venues. Their signature 'Crying Tiger' perfectly aligns with your historical spice threshold.
+                            </p>
+</div>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="bg-surface-bright text-on-secondary-container font-caption text-caption px-3 py-1.5 rounded-full border border-outline-variant">🔥 High Heat</span>
+<span class="bg-surface-bright text-on-secondary-container font-caption text-caption px-3 py-1.5 rounded-full border border-outline-variant">Dim Lighting</span>
+<span class="bg-surface-bright text-on-secondary-container font-caption text-caption px-3 py-1.5 rounded-full border border-outline-variant">Craft Cocktails</span>
+</div>
+</div>
+</article>
+<!-- Restaurant Card 2 -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 group cursor-pointer flex flex-col">
+<div class="relative h-56 w-full overflow-hidden bg-surface-container">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+<img alt="Plated dish" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A striking close-up photograph of a meticulously plated, spicy Asian fusion dish. Vibrant red chili oil contrasts against a stark white ceramic bowl on a dark slate surface. The lighting is bright and directional, creating a modern, high-contrast aesthetic that feels both appetizing and visually dynamic, perfectly suited for a high-end food app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG7_V4oSjvZhHGerG0UmZUvYpQruvt7YqKQAnYyr9UdX075LNqqhyrXKnQ-KBl8o66algbIyV-uHwC3L3OGBZlqeb3zrD-npoYGi-LuV2wFlFWifGGsuI5d7n7Yqhb_b7FWQBMGjII2pYFQEuqejr5e4Z6bESUnxpL-daZVwR8iSmlDskSYJl3z8uOr8nSDkOt_XuwyABYwpZnIAE4dJl44sN9pjb3B1zqiK1F2PSEKQPrMa6o1A6ucMd_219mevEymOOlUJFcsLuW"/>
+<!-- Badges Overlay -->
+<div class="absolute top-4 left-4 z-20 bg-primary/90 backdrop-blur-sm text-on-primary px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-md text-label-md">94% Match</span>
+</div>
+<div class="absolute bottom-4 left-4 z-20">
+<h3 class="font-headline-md text-headline-md text-white mb-1">Neon Dragon</h3>
+<div class="flex gap-2">
+<span class="bg-white/20 backdrop-blur-md text-white font-caption text-caption px-2 py-0.5 rounded">$$</span>
+<span class="bg-white/20 backdrop-blur-md text-white font-caption text-caption px-2 py-0.5 rounded">1.2 mi</span>
+</div>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 bg-surface-container-lowest">
+<div class="bg-surface-container-low p-4 rounded-lg mb-4 border border-outline-variant/30 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary shrink-0 text-[20px]" data-icon="bolt">bolt</span>
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                                Matches your <strong class="text-on-surface">dietary base</strong>. While slightly louder than your usual preference, their plant-based Szechuan menu has a 99% satisfaction rate for similar profiles.
+                            </p>
+</div>
+<div class="mt-auto flex flex-wrap gap-2">
+<span class="bg-surface-bright text-on-secondary-container font-caption text-caption px-3 py-1.5 rounded-full border border-outline-variant">🌱 Vegan Options</span>
+<span class="bg-surface-bright text-on-secondary-container font-caption text-caption px-3 py-1.5 rounded-full border border-outline-variant">Lively</span>
+<span class="bg-surface-bright text-on-secondary-container font-caption text-caption px-3 py-1.5 rounded-full border border-outline-variant">Fusion</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 lg:hidden bg-surface/95 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-lg docked full-width rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high active:scale-90 transition-transform p-2" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-2 w-16 h-16 -mt-6 shadow-lg border-4 border-surface active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="search" data-weight="fill" style="font-variation-settings: 'FILL' 1;">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high active:scale-90 transition-transform p-2" href="#">
+<span class="material-symbols-outlined" data-icon="temp_preferences_custom">temp_preferences_custom</span>
+<span class="font-caption text-caption mt-1">Matches</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-high active:scale-90 transition-transform p-2" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-caption text-caption mt-1">Profile</span>
+</a>
+</nav>
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-container dark:bg-surface-container-highest border-t border-outline-variant flat no shadows mt-12 hidden md:block">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-2">
+<div class="font-headline-md text-headline-md font-bold text-on-surface mb-2">GastroAI</div>
+<p class="font-caption text-caption text-on-secondary-fixed-variant">© 2024 GastroAI Recommendation Engine. All rights reserved. Powered by NeuralTaste.</p>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">About AI</a>
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Restaurant Partners</a>
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Careers</a>
+</div>
+</div>
+</footer>
+</body></html>

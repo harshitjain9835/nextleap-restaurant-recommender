@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GastroAI - Restaurant Details</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#92001c",
+                        "on-background": "#191c1d",
+                        "on-tertiary-fixed-variant": "#005229",
+                        "inverse-primary": "#ffb3b1",
+                        "tertiary-fixed": "#7cfca5",
+                        "on-primary": "#ffffff",
+                        "outline": "#8f6f6e",
+                        "surface-container-low": "#f3f4f5",
+                        "surface": "#f8f9fa",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#410007",
+                        "inverse-on-surface": "#f0f1f2",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c7c6c7",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "secondary-container": "#e3e2e3",
+                        "on-surface-variant": "#5b403f",
+                        "primary-fixed": "#ffdad8",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-secondary-container": "#646465",
+                        "outline-variant": "#e4bebc",
+                        "surface-dim": "#d9dadb",
+                        "on-surface": "#191c1d",
+                        "secondary-fixed": "#e3e2e3",
+                        "tertiary": "#006a36",
+                        "primary-fixed-dim": "#ffb3b1",
+                        "background": "#f8f9fa",
+                        "primary-container": "#db313f",
+                        "tertiary-fixed-dim": "#5ede8b",
+                        "on-primary-container": "#fffbff",
+                        "tertiary-container": "#008646",
+                        "surface-tint": "#bb162c",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#464748",
+                        "on-secondary-fixed": "#1a1c1d",
+                        "secondary": "#5e5e5f",
+                        "primary": "#b7122a",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-container": "#f6fff4",
+                        "on-tertiary-fixed": "#00210d",
+                        "surface-variant": "#e1e3e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "gutter": "16px",
+                        "max-width": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "caption": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Ambient Shadow for Interactive Elements */
+        .ambient-shadow {
+            box-shadow: 0px 8px 24px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar Component -->
+<header class="bg-surface dark:bg-background w-full top-0 sticky border-b border-outline-variant dark:border-outline z-50">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop flex items-center justify-between h-16">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed flex items-center gap-2 cursor-pointer transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+                GastroAI
+            </a>
+<!-- Search & Actions -->
+<div class="flex items-center gap-4">
+<!-- Search Bar (on_right) -->
+<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-4 py-2 border border-surface-container-high focus-within:border-primary transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant mr-2 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md font-body-md text-on-surface placeholder-on-surface-variant w-48 outline-none" placeholder="Find a dish or craving..." type="text"/>
+</div>
+<!-- Trailing Icon Actions -->
+<button class="text-primary dark:text-primary-fixed hover:text-primary-container transition-colors cursor-pointer transition-all duration-200 active:scale-95 p-2 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pb-24">
+<!-- Hero Section -->
+<section class="relative w-full h-[512px] min-h-[400px] bg-surface-container overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A highly detailed, cinematic photograph of a vibrant, upscale modern dining interior. The scene features a sleek wooden table showcasing a meticulously plated, colorful gourmet dish, surrounded by subtle, warm ambient lighting. The atmosphere reflects a high-end, AI-curated restaurant experience within a modern corporate design aesthetic. Whitespace and minimalist architectural details are visible in the blurred background, emphasizing the crisp, vibrant colors of the food and the subtle red primary accents of the table setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyX4aEy3G-G2NrQfc_PVoqVMgbyvRJUughcTKVsYcA2W7mLMT1L_23lzz6xHNDLME-w5JisFmpKhGO9URdFBzxfLeYYhosYXWuheX5yFymLdgUW5XryEbi1wLmB9exlrnji6hHigfCg_SFT4-0CIXHp95C8XFe7yXPlM-Gxauk8JwV7wHS4FnSsinvDyOiuXYL2kcKuvNRTWM0oE8xGF6xV5pHGB-MQkmS0QPJFFpWMGYERB8HTydhrY1BSfjphAQlSo66yRsZLJ69');"></div>
+<!-- Gradient Overlay for readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop pb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-3">
+<!-- AI-Curated Badge -->
+<div class="inline-flex items-center gap-1 bg-primary px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-on-primary text-[14px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-md text-label-md text-on-primary">98% Match</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface bg-surface/80 backdrop-blur-md px-3 py-1 rounded-full border border-outline-variant">Contemporary Japanese</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-background drop-shadow-md">Nomi Yuzu</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">A masterful blend of traditional Edomae techniques and modern gastronomic innovation, curated perfectly for your umami-forward palate.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface border border-outline-variant text-on-surface font-label-md text-label-md px-6 py-3 rounded-lg hover:ambient-shadow transition-shadow flex items-center gap-2">
+<span class="material-symbols-outlined">bookmark_add</span>
+                                Save
+                            </button>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-lg hover:bg-primary-container transition-colors shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined">directions_walk</span>
+                                Directions
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Content Grid -->
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop mt-gutter grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Main Column (Left) -->
+<div class="lg:col-span-8 space-y-12">
+<!-- What to Order (AI Selected) -->
+<section>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h2 class="font-headline-md text-headline-md text-on-background">What to Order</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Based on your recent love for truffles and citrus notes, NeuralTaste recommends these dishes.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden hover:ambient-shadow transition-all duration-300 group cursor-pointer">
+<div class="h-48 bg-surface-container relative overflow-hidden">
+<img alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up, high-quality image of an elegant sushi platter featuring seared wagyu beef topped with freshly shaved black truffle and a delicate quail egg yolk. The lighting is focused and warm, highlighting the rich textures and vibrant colors against a minimalist, dark slate plate. The composition adheres to a sophisticated, modern corporate aesthetic suitable for an AI-powered culinary platform, emphasizing precision and sensory appeal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrkGYKKa9AXWY8SL7eomN7lSUBjdHVdr7dNFl-sPgoBhEtLt0I6DTuWfsNGKh4zMaOpLdYS2QblaLIxD0OlG9w8AsKX4TFSQVLJjao5Aaj_uMyTXoJ-iDp7UoqEqK4u9ME6_b60Azb3BqWgomv7xoCwiTNZ9hV63k7syfz4_dsijnBEySU0RgjP3h49Byy9HcQ18fw2QKGXQqkEc18blD779HnawOpcHtVOptFRT1WK9mEIi9qhpX7qB7oXW6Gex3vX0SOMebSjU9p"/>
+<div class="absolute top-3 right-3 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-md flex items-center gap-1 border border-outline-variant shadow-sm">
+<span class="material-symbols-outlined text-tertiary text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-md text-label-md text-tertiary-container">Top Pick</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl">Wagyu Truffle Nigiri</h3>
+<span class="font-label-md text-label-md text-primary">$28</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">A5 Wagyu slightly torched, finished with white truffle oil and smoked sea salt. Matches your high affinity for rich, savory profiles.</p>
+<div class="mt-4 flex gap-2">
+<span class="px-2 py-1 bg-surface-container-low text-on-secondary-container font-caption text-caption rounded">Savory</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-secondary-container font-caption text-caption rounded">Rich</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden hover:ambient-shadow transition-all duration-300 group cursor-pointer">
+<div class="h-48 bg-surface-container relative overflow-hidden">
+<img alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A pristine, minimalist photograph of a beautifully crafted yellowtail sashimi dish resting on a bed of crushed ice within a sleek, shallow ceramic bowl. Bright, clean lighting accentuates the translucent quality of the fish and the vibrant yellow of yuzu zest garnish. The image conveys a fresh, energetic vibe consistent with a modern, high-tech restaurant discovery platform, utilizing expansive whitespace to let the food pop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGnkHt5LVvbIPeFZeYsH0Yg4ABFmV7IVGMpDUIm5j7beDWcJ9l9E17kbVK2zdKu-bgLjLgjvrcT1w2AY5EQjQL5K4Al4sw-FALiDNYIzxPIF-2UJ6gEOa9skWCunNup4nCrPt_3NsjVmE4XUb2gU5sKnl7reRFcgGiU2smWt8bGOv1-NYubge6B287AOfAh2d6pRepzJ9vRljhOvMb9e9lcNptKG7b8UIv1Jmt7dUi8CdMPBrL2A543st387sWAf_LbbctVlgAjpBl"/>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl">Yuzu Hamachi Crudo</h3>
+<span class="font-label-md text-label-md text-primary">$22</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">Fresh yellowtail with a vibrant yuzu-ponzu emulsion, jalapeño, and micro-cilantro. Hits your preference for bright, acidic starters.</p>
+<div class="mt-4 flex gap-2">
+<span class="px-2 py-1 bg-surface-container-low text-on-secondary-container font-caption text-caption rounded">Citrus</span>
+<span class="px-2 py-1 bg-surface-container-low text-on-secondary-container font-caption text-caption rounded">Fresh</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Traditional Details (Menu/Info) -->
+<section class="border-t border-outline-variant pt-8">
+<h2 class="font-headline-md text-headline-md text-on-background mb-6">Menu Highlights</h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-3 border-b border-surface-container">
+<div>
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">Omakase Signature</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">12-course chef's selection</p>
+</div>
+<span class="font-label-md text-label-md text-on-surface">$150</span>
+</div>
+<div class="flex justify-between items-center py-3 border-b border-surface-container">
+<div>
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">Miso Black Cod</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Marinated for 72 hours, ginger shoot</p>
+</div>
+<span class="font-label-md text-label-md text-on-surface">$38</span>
+</div>
+</div>
+<button class="mt-6 text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                        View Full Menu <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</section>
+</div>
+<!-- Sidebar Column (Right) -->
+<div class="lg:col-span-4 space-y-8">
+<!-- AI Taste Profile (Abstract Radar/Stats) -->
+<div class="bg-surface rounded-xl border border-outline-variant p-6 shadow-sm">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">tune</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">AI Taste Profile</h3>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-6">How this restaurant aligns with your sensory baseline.</p>
+<div class="space-y-4">
+<!-- Stat Bar 1 -->
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface">Umami / Savory</span>
+<span class="font-label-md text-label-md text-primary">95%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 95%"></div>
+</div>
+</div>
+<!-- Stat Bar 2 -->
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface">Citrus / Acidic</span>
+<span class="font-label-md text-label-md text-tertiary-container">88%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-tertiary h-2 rounded-full opacity-80" style="width: 88%"></div>
+</div>
+</div>
+<!-- Stat Bar 3 -->
+<div>
+<div class="flex justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface">Spicy / Heat</span>
+<span class="font-label-md text-label-md text-on-surface-variant">30%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full opacity-50" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Vibe Check -->
+<div class="bg-surface-container-low rounded-xl p-6">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-on-surface" style="font-variation-settings: 'FILL' 1;">mood</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Vibe Check</h3>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-surface text-on-surface border border-outline-variant rounded-full font-label-md text-label-md">Intimate</span>
+<span class="px-3 py-1 bg-surface text-on-surface border border-outline-variant rounded-full font-label-md text-label-md">Low Noise</span>
+<span class="px-3 py-1 bg-surface text-on-surface border border-outline-variant rounded-full font-label-md text-label-md">Date Night</span>
+</div>
+<div class="bg-surface p-4 rounded-lg border border-outline-variant">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary mt-1" style="font-variation-settings: 'FILL' 1;">forum</span>
+<p class="font-caption text-caption text-on-surface-variant italic">"Sentiment analysis of 450 reviews indicates a highly praised atmosphere for quiet conversation and attentive, unobtrusive service."</p>
+</div>
+</div>
+</div>
+<!-- Location & Info -->
+<div class="bg-surface rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="h-40 bg-surface-container w-full relative">
+<!-- Simulated Map -->
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="A stylized, top-down map interface illustrating an urban grid with sharp, clean lines in a monochromatic light gray palette. A singular, bright primary red pin marker designates a specific location. The design embodies a modern, minimalist corporate aesthetic, suggesting precision navigation typical of an advanced AI platform interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBNbOKxuSNGBRE-AjcP_Y8udLn-u1JChU_LZoUs5p4o5HbrLwgJ4MmZHvJlsdmlJdkWaxtlYOgAiONz_SCfpmJl8awZlT3HkcOzyIqiEjgFlunKs8OkCdowZMxyjUbh1msF9Ueu-dJxSLmCOW-D1nQAUgEWH3snuHTYmjWROZQPzDQ6zhTYYtlOPgupgM9USLCk2IrW9YYEp3oHmW7inSjgxLKXunp13xktTQqDSjXeeGOFxeN6MU5arH5H1f3IjmgO7StA09NFJWWB');"></div>
+</div>
+<div class="p-6">
+<h4 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Location</h4>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                            1284 Tech Boulevard, District 9
+                        </p>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+                            Open today: 5:00 PM - 11:00 PM
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="bg-surface-container dark:bg-surface-container-highest w-full py-12 border-t border-outline-variant flat no shadows">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Brand / Copyright -->
+<div class="md:col-span-1 flex flex-col gap-4">
+<span class="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+                    GastroAI
+                </span>
+<p class="font-caption text-caption text-on-secondary-fixed-variant">
+                    © 2024 GastroAI Recommendation Engine. All rights reserved. Powered by NeuralTaste.
+                </p>
+</div>
+<!-- Links (Simulated distribution across columns) -->
+<div class="md:col-span-3 flex flex-wrap gap-8 justify-start md:justify-end">
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">About AI</a>
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Restaurant Partners</a>
+<a class="font-caption text-caption text-on-secondary-fixed-variant hover:text-primary underline transition-all opacity-80 hover:opacity-100" href="#">Careers</a>
+</div>
+</div>
+</footer>
+</body></html>
